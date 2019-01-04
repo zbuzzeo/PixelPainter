@@ -1,0 +1,15 @@
+/* visualization */
+#pixelGrid {
+    display: grid;
+    /* grid-template-columns: 3; */
+    /* grid-template-rows: 3; */
+    grid-column-gap: 0.4em;
+    grid-row-gap: 0.4em;
+
+}
+
+.cell {
+    width: 6em;
+    height: 6em;
+
+}
