@@ -1,0 +1,83 @@
+/* visualization */
+/* move swatch below the canvas when switching to mobile dimensions. */
+:root {
+    --cell-size: 1.4em;
+    --column-size: calc( --cell-size );
+    --default-cell-color: rgb( 220, 220, 220 );
+}
+
+body > h1 {
+    display: block;
+    text-align: center;
+    font-size: 3em;
+}
+
+#pixelPainter {
+    display: grid;
+    /* justify-items = horizontal, align-items = vertical */
+    justify-items: center;
+    /* align-items: center;  */
+    grid-row-gap: 1.4em;
+}
+
+#pixelGrid {
+    display: grid;
+    /* remember to change the repeat amount if the number of cells in the grid changes. */
+    /* grid column and row sizes are 83.33% the size of a cell. */
+    grid-template-columns: repeat( 30, 1.1666em );
+    grid-template-rows: repeat( 30, 1.1666em );
+}
+
+#swatchGrid {
+    display: grid;
+    grid-template-columns: repeat( 8, 2em );
+    grid-template-rows: repeat( 2, 2em );
+}
+
+#pixelGrid > .cell {
+    width: var( --cell-size );
+    height: var( --cell-size );
+}
+
+#swatchGrid > .cell {
+    width: 3em;
+    height: 3em;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    box-shadow: inset 0 0 5px #aaa, 0 0 5px black;
+}
+
+#swatchTitle {
+    font-family: 'Helvetica';
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+#eraseOptions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin-right: 1.5em;
+}
+
+#optionErase, #optionClear {
+    font-family: 'Helvetica';
+    font-weight: bold;
+}
+
+.flair {
+    background-color: black;
+    height: 0em;
+    transition-property: height;
+    transition-duration: 300ms;
+}
+
+#optionErase:hover #ERASER-flair, #optionClear:hover #CLEAR-CANVAS-flair {
+    height: 0.2em;
+}
+
+button {
+    background-color: var( --default-cell-color );
+    padding: 0;
+    border-width: 1px;
+}
