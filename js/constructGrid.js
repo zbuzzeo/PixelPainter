@@ -1,8 +1,9 @@
 const grid = ( function ( ) {
     const getPixelPainter = document.getElementById( 'pixelPainter' );
     const getGrid = document.getElementById( 'pixelGrid' );
+    
     let coordinatePairs = [  ];
-    let extraOptions = [  ];
+    let extraOptions = { };
     // this is its own function in the case that i want to form canvases or make grids on other HTML elements without rewriting the functions.
     const appendToFrom = ( parent, child ) => parent.appendChild( child );
 
@@ -13,13 +14,15 @@ const grid = ( function ( ) {
         return arrayChildren;
     }
 
-    const formatCanvas = ( ) => {
+    function formatCanvas() {
         const gridContainer = document.createElement( 'div' );
         const swatchContainer = document.createElement( 'div' );
         const swatchTitle = document.createElement( 'div' );
         const eraseContainer = document.createElement( 'div' );
         const eraseTitle = document.createElement( 'div' );
         const clearTitle = document.createElement( 'div' );
+
+        // only pixelGrid and swatchGrid are needed to make the grid. the rest of the elements can be created later.
         gridContainer.id = 'pixelGrid';
         swatchContainer.id = 'swatchGrid';
         swatchTitle.id = 'swatchTitle';
@@ -29,17 +32,27 @@ const grid = ( function ( ) {
         eraseTitle.innerHTML = 'ERASER';
         clearTitle.id = 'optionClear';
         clearTitle.innerHTML = 'CLEAR-CANVAS';
+
         appendToFromGroup( getPixelPainter, [ 
             gridContainer,
             swatchTitle,
             swatchContainer,
             eraseContainer,
         ] );
+  
         appendToFromGroup( eraseContainer, [ 
             eraseTitle,
             clearTitle,
         ] );
     }
+
+    formatCanvas( );
+    const getEraseOptions = document.getElementById('eraseOptions');
+    const getOptionErase = document.getElementById('optionErase');
+    const getOptionClear = document.getElementById('optionClear');
+    
+
+    console.log(getOptionErase);  
 
     const flair = ( element ) => {
         const newFlair = document.createElement( 'div' );
@@ -48,22 +61,18 @@ const grid = ( function ( ) {
         appendToFrom( element, newFlair );
     }
 
-    const getEraseOptions = ( ) => {
-        return document.getElementById( 'eraseOptions' );
+    const addFlairs = (element) => {
+      // const flair = (element) => {
+        console.log(getOptionErase);
+        const newFlair = document.createElement('div');
+        newFlair.className = 'flair';
+        newFlair.id = `${element.innerHTML}-flair`;
+        appendToFrom(element, newFlair);
+      // }
+    
     }
 
-    const getOptionErase = ( ) => {
-        return document.getElementById( 'optionErase' );
-    }
-
-    const getOptionClear = ( ) => {
-        return document.getElementById( 'optionClear' );
-    }
-
-    const getExtraOptions = ( ) => {
-        extraOptions.push( getOptionErase( ), getOptionClear( ) );
-        return extraOptions;
-    }
+ 
 
     const storeAsCoords = ( x, y ) => {
         const pair = [  ];
@@ -119,7 +128,7 @@ const grid = ( function ( ) {
 
     // creates the matrix that holds cells. each cell should have a numbered position in the grid.
     // refactor: make this function reusable for the swatch grid.
-    const makeGrid = ( numDown, numRight ) => {
+    const makeGrid = ( numDown, numRight, ) => {
         for ( let i = 0; i < numDown; i++ ) {
             for ( let j = 0; j < numRight; j++ ) {
                 makeCells( 1, 'pixelGrid' );
@@ -165,9 +174,11 @@ const grid = ( function ( ) {
     }
 
     // initialization:
-    formatCanvas( );
-    flair( getOptionErase( ) );
-    flair( getOptionClear( ) );
+    // formatCanvas( );
+    // const getEraseOptions = document.getElementById('eraseOptions');
+    // const getOptionErase = document.getElementById('optionErase');
+    // const getOptionClear = document.getElementById('optionClear');
+    // addFlairs();
     makeGrid( 30, 30 );
     distributeCoords( getGrid );
     clearCoordinates( );
@@ -176,6 +187,7 @@ const grid = ( function ( ) {
     populatePalette( );
     getSwatchCells( );
     getCoordinates( );
+
     // updateCellText( );   // labels each cell
     const getPixelGrid = document.getElementById( 'pixelGrid' );
 
@@ -184,7 +196,7 @@ const grid = ( function ( ) {
         appendToFrom: appendToFrom,
         appendToFromGroup: appendToFromGroup,
         formatCanvas: formatCanvas,
-        flair: flair,
+        addFlairs: addFlairs,
         getEraseOptions: getEraseOptions,
         getOptionErase: getOptionErase,
         getOptionClear: getOptionClear,
@@ -205,4 +217,7 @@ const grid = ( function ( ) {
         updateCellText: updateCellText,
     }
 
-} ) ( );
+})();
+
+grid.addFlairs(getOptionErase);
+grid.addFlairs(getOptionClear);
